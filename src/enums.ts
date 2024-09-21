@@ -4,9 +4,3 @@ export const enum Tools {
     TRIANGLE = 'triangle',
     HAND = 'hand'
   }
-
-  export const enum Shapes {
-    CIRCLE = 'circle',
-    SQUARE = 'square',
-    STAR = 'star',
-  }
