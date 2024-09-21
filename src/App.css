@@ -52,6 +52,24 @@
   background-color: #eeeeee;
 }
 
+.hideIcon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
 canvas {
   touch-action: none;
 }
