@@ -58,6 +58,7 @@ function App() {
   }
 
   const handleStopDrawing = () => {
+    console.log('end')
     if (isDrawing) {
     setShapes(shapes => [...shapes.filter(item => item.id !== currentShape!.id), structuredClone(currentShape!)])
     setIsDrawing(false)
@@ -70,7 +71,7 @@ function App() {
         height={window.innerHeight} 
         onPointerDown={(e) => handleStartDrawing(e)}
         onPointerMove={(e) => handleDrawing(e)}
-        onPointerup={() => handleStopDrawing()}>
+        onPointerUp={() => handleStopDrawing()}>
           <Layer>
             {shapes.map(shape => {
               switch (shape.type) {
