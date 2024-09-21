@@ -1,34 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
+import { Stage, Layer, Rect, Circle, Star } from 'react-konva';
+import Sidebar from './components/Sidebar';
+import { useState } from 'react';
+import { Tools } from './enums';
+import { KonvaEventObject, Node, NodeConfig } from 'konva/lib/Node';
+
+type Shape = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  type: Tools
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [tool, setTool] = useState<Tools | undefined>()
+  const [shapes, setShapes] = useState<Shape[]>([])
+
+  const handleToolSelected = (tool:Tools) => {
+    setTool(tool)
+  }
+
+  const handleCanvasClicked = (event: KonvaEventObject<MouseEvent, Node<NodeConfig>>) => {
+    if (tool !== Tools.HAND && tool !== undefined) {
+      const {x,y} = event.currentTarget.getRelativePointerPosition()!
+      setShapes(shapes => [...shapes, {x: x, y: y, width: 50, height: 50, type: tool}])
+    }
+  }
 
   return (
-    <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        
+        <Stage width={window.innerWidth} height={window.innerHeight} onClick={(e) => handleCanvasClicked(e)}>
+          <Layer>
+            {shapes.map(shape => {
+              switch (shape.type) {
+                case Tools.SQUARE: return <Rect
+                x={shape.x}
+                y={shape.y}
+                width={shape.width}
+                height={shape.height}
+                fill="red"
+                shadowBlur={10}
+                draggable={tool === Tools.HAND}
+                />
+                case Tools.CIRCLE: return <Circle
+                x={shape.x}
+                y={shape.y}
+                radius={50}
+                fill="green"
+                draggable={tool === Tools.HAND}/>
+                case Tools.TRIANGLE: return <Star
+                x={shape.x}
+                y={shape.y}
+                numPoints={3}
+                innerRadius={25}
+                outerRadius={50}
+                fill="yellow"
+                draggable={tool === Tools.HAND}/>
+              }
+            })}
+          </Layer>
+        </Stage>
+        <Sidebar selectedTool={tool} onToolSelect={handleToolSelected}></Sidebar>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
 
