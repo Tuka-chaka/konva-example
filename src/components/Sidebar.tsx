@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PiShapesLight, PiHandPointingLight, PiSquareLight, PiCircleLight, PiStarLight } from "react-icons/pi";
+import { PiShapesLight, PiHandPointingLight, PiSquareLight, PiCircleLight, PiTriangleLight } from "react-icons/pi";
 import { IconContext } from "react-icons";
 import { Tools } from '../enums';
 
@@ -31,7 +31,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({selectedTool, onToolSel
                 </div>
                 <div className={selectedTool === Tools.TRIANGLE ? 'dropdownOption selected': 'dropdownOption'}
                 onClick={() => onToolSelect(Tools.TRIANGLE)}>
-                  <PiStarLight/>
+                  <PiTriangleLight/>
                 </div>
               </IconContext.Provider> 
             </div>: 
