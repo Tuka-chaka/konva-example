@@ -71,7 +71,8 @@ function App() {
         height={window.innerHeight} 
         onPointerDown={(e) => handleStartDrawing(e)}
         onPointerMove={(e) => handleDrawing(e)}
-        onPointerUp={() => handleStopDrawing()}>
+        onPointerUp={() => handleStopDrawing()}
+        draggable={tool === Tools.HAND}>
           <Layer>
             {shapes.map(shape => {
               switch (shape.type) {
